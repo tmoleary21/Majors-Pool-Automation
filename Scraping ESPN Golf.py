@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 import urllib.request
 def getPlayerInfo(playerName):
     url = 'https://www.espn.com/golf/rankings'
