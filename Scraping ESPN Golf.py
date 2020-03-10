@@ -1,45 +1,45 @@
+import pandas as pd
+import numpy
 import urllib.request
-def getPlayerInfo(playerName):
+
+
+def readResponses():
+    names = ['Timestamp', 'First Name', 'Last Name', 'Golfer 1', 'Golfer 2', 'Golfer 3', 'Final Score']
+    responses = pd.read_csv("Majors Pool.csv", usecols=range(1,7), names=names)
+    return responses.to_numpy().tolist()
+
+
+def getPlayerLink(playerLastName):
     url = 'https://www.espn.com/golf/rankings'
     html = urllib.request.urlopen(url).read()
     rhtml = ''.join([chr(n) for n in html])
-    start = rhtml.index('"current":13')  #will need to be changed by player instead of this
-    
-    braceCount = 1
-    i = start
-    while braceCount != 0:
-        if rhtml[i] == '{':
-            braceCount += 1
-        if rhtml[i] == '}':
-            braceCount -= 1
-        i += 1
-    end = i
-    
-    infoText = rhtml[start-1:end]
-    
-    #Want First Name, Last Name, ID ... ANYTHING ELSE?
-    firstNameStart = infoText.index('"firstName":') + 13
-    firstNameEnd = infoText[firstNameStart:].index('"')
-    
-    lastNameStart = infoText.index('"lastName":') + 12
-    lastNameEnd = infoText[lastNameStart:].index('"')
-    
-    idStart = infoText.index('"id":')+6
-    idEnd = infoText[idStart:].index('"')
-    
-    info = {'first': infoText[firstNameStart:firstNameStart + firstNameEnd], 
-            'last': infoText[lastNameStart:lastNameStart + lastNameEnd], 
-            'id': infoText[idStart:idStart + idEnd]}
-    
-    return info
+    start = rhtml.index(playerLastName.lower())
+    linkEnd = start + rhtml[start:].index('"')
 
-print(getPlayerInfo(''))
+    while rhtml[start] != '"':
+        start -= 1
+    return rhtml[start+1:linkEnd]
 
 
+print(getPlayerLink("koepka"))
 
 
-def getPlayerScores(info):
-    url = 'http://www.espn.com/golf/player/_/id/' + info.get('id') + '/' + info.get('firstName') + '-' + info.get('lastName')
+def getPlayerEarnings(playerLastName):
+    url = getPlayerLink(playerLastName)
     html = urllib.request.urlopen(url).read()
     rhtml = ''.join([chr(n) for n in html])
+
     #TODO: needs to find the final score from tournament and earnings.
+
+
+responses = readResponses()
+
+tally = [[]]
+
+for i in range(1,len(responses)):
+    tally[i] = responses[:3]
+    tally[i][3] = getPlayerEarnings(responses[2].split()[1])
+    tally[i][4] = responses[3]
+    tally[i][3] = getPlayerEarnings(responses[3].split()[1])
+    tally[i][6] = responses[4]
+    tally[i][3] = getPlayerEarnings(responses[4].split()[1])
