@@ -83,10 +83,12 @@ def getWinnerScore(tournamentHTML, tournament): #PROBLEM. ERROR WHEN FINDING WEB
         linkStart -= 1
     print(tournamentHTML[linkStart+1:linkEnd])
 
-    url = 'https://www.espn.com' + tournamentHTML[linkStart:linkEnd]
+    url = 'https://www.espn.com' + tournamentHTML[linkStart+1:linkEnd]
+    print(url)
     html = urllib.request.urlopen(url).read()
     rhtml = ''.join([chr(n) for n in html])
-
+    
+    
 getWinnerScore(accessTournaments(),'Arnold Palmer Invitational Pres. By Mastercard')
 
 
@@ -130,4 +132,4 @@ for t in tally:
     print(t)
 
 
-print('WINNER: ' + str(tally[winnerIndex]))
+print('\nWINNER: ' + str(tally[winnerIndex]))
