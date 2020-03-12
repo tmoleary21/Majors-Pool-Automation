@@ -14,7 +14,7 @@ def accessRankings(): #Just for accessing the rankings site, so it can be access
     rhtml = ''.join([chr(n) for n in html])
     return rhtml
 
-def getPlayerLink(rhtml, playerLastName):
+def getPlayerLink(rhtml, playerLastName): #Grabs the link for the player's profile site from the rankings site
     start = rhtml.index(playerLastName.lower())
     linkEnd = start + rhtml[start:].index('"')
 
@@ -63,20 +63,20 @@ def getScores(url, tournament): #Gets the player earnings from the player's prof
         return []
     return info[index]
 
-def accessTournaments():
+def accessTournaments(): #Accesses the tournaments page so it is only accessed once
     url = 'https://www.espn.com/golf/leaderboard/_/tournamentId/401155428'
     html = urllib.request.urlopen(url).read()
     rhtml = ''.join([chr(n) for n in html])
     return rhtml
 
-def getTournaments(rhtml):
+def getTournaments(rhtml): #Gets a list of recent tournaments
     start = rhtml.index('Tournaments')
     end = start + rhtml[start:].index('</div>')
     tournaments = rhtml[start:end].split('value="Selected">')
     tournaments = [tournaments[i][:tournaments[i].index('<')] for i in range(1,len(tournaments))]
     return tournaments
 
-def getWinnerScore(tournamentHTML, tournament): #PROBLEM. ERROR WHEN FINDING WEB PAGE.
+def getWinnerScore(tournamentHTML, tournament): #Grabs the selected tournament's winner's score to be compared with guesses
     linkEnd = tournamentHTML.index(tournament) - 19
     linkStart = linkEnd-1
     while tournamentHTML[linkStart] != '"':
@@ -89,10 +89,11 @@ def getWinnerScore(tournamentHTML, tournament): #PROBLEM. ERROR WHEN FINDING WEB
     rhtml = ''.join([chr(n) for n in html])
     
     
+    
 getWinnerScore(accessTournaments(),'Arnold Palmer Invitational Pres. By Mastercard')
 
-
-
+def decideTie(tally, winnerIndices, tournamentWinnerScore):
+    pass
 
 responses = readResponses()
 print(str(responses) + '\n')
@@ -106,7 +107,7 @@ for i in range(6):
     print(str(i+1) + ' - ' + tournaments[i])
 tournament = tournaments[int(input())-1]
 
-winnerIndex = 0
+winnerIndices = [0]
 tally = []
 for i in range(1,len(responses)):
     sum = 0
@@ -126,10 +127,16 @@ for i in range(1,len(responses)):
     temp.append(responses[i][5])
     tally.append(temp)
     if i > 1:
-        winnerIndex = i-1 if sum > tally[i-2][8] else winnerIndex
+        if sum == tally[winnerIndices[0]][8]:
+            winnerIndices.append(i-1)
+        if sum > tally[winnerIndices[0]][8]:
+            winnerIndices = [i-1]
 
 for t in tally:
     print(t)
 
+print(winnerIndices)
+if len(winnerIndices) > 1:
+    
 
-print('\nWINNER: ' + str(tally[winnerIndex]))
+print('\nWINNER: ' + str(tally[winnerIndices[0]]))
