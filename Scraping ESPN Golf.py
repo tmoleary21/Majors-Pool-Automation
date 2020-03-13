@@ -8,11 +8,13 @@ def readResponses():
     responses = pd.read_csv("Majors Pool.csv", usecols=range(1,7), names=names)
     return responses.to_numpy().tolist()
 
+
 def accessRankings(): #Just for accessing the rankings site, so it can be accessed only once.
     url = 'https://www.espn.com/golf/rankings'
     html = urllib.request.urlopen(url).read()
     rhtml = ''.join([chr(n) for n in html])
     return rhtml
+
 
 def getPlayerLink(rhtml, playerLastName): #Grabs the link for the player's profile site from the rankings site
     start = rhtml.index(playerLastName.lower())
@@ -21,6 +23,7 @@ def getPlayerLink(rhtml, playerLastName): #Grabs the link for the player's profi
     while rhtml[start] != '"':
         start -= 1
     return rhtml[start+1:linkEnd]
+
 
 def getScores(url, tournament): #Gets the player earnings from the player's profile site
     html = urllib.request.urlopen(url).read()
@@ -63,11 +66,13 @@ def getScores(url, tournament): #Gets the player earnings from the player's prof
         return []
     return info[index]
 
+
 def accessTournaments(): #Accesses the tournaments page so it is only accessed once
     url = 'https://www.espn.com/golf/leaderboard/_/tournamentId/401155428'
     html = urllib.request.urlopen(url).read()
     rhtml = ''.join([chr(n) for n in html])
     return rhtml
+
 
 def getTournaments(rhtml): #Gets a list of recent tournaments
     start = rhtml.index('Tournaments')
@@ -76,27 +81,33 @@ def getTournaments(rhtml): #Gets a list of recent tournaments
     tournaments = [tournaments[i][:tournaments[i].index('<')] for i in range(1,len(tournaments))]
     return tournaments
 
+
 def getWinnerScore(tournamentHTML, tournament): #Grabs the selected tournament's winner's score to be compared with guesses
     linkEnd = tournamentHTML.index(tournament) - 19
     linkStart = linkEnd-1
     while tournamentHTML[linkStart] != '"':
         linkStart -= 1
-    print(tournamentHTML[linkStart+1:linkEnd])
 
     url = 'https://www.espn.com' + tournamentHTML[linkStart+1:linkEnd]
-    print(url)
     html = urllib.request.urlopen(url).read()
     rhtml = ''.join([chr(n) for n in html])
-    
-    
-    
-getWinnerScore(accessTournaments(),'Arnold Palmer Invitational Pres. By Mastercard')
+    start = rhtml.index('AnchorLink leaderboard_player_name')
+    start = start + rhtml[start:].index('<td class="Table__TD">') + 22
+    end = start + rhtml[start:start+10].index('<')
+    if rhtml[start:end] == 'E':
+        return 0
+    return int(rhtml[start:end])
+
 
 def decideTie(tally, winnerIndices, tournamentWinnerScore):
-    pass
+    winner = winnerIndices[0]
+    for i in range(1,len(winnerIndices)):
+        if abs(int(tally[winnerIndices[i]][9]) - tournamentWinnerScore) < abs(int(tally[winner][9]) - tournamentWinnerScore):
+            winner = winnerIndices[i]
+    return winner
 
 responses = readResponses()
-print(str(responses) + '\n')
+#print(str(responses) + '\n')
 
 rankingsHTML = accessRankings()
 tournamentsHTML = accessTournaments()
@@ -135,8 +146,8 @@ for i in range(1,len(responses)):
 for t in tally:
     print(t)
 
-print(winnerIndices)
+#print(winnerIndices)
 if len(winnerIndices) > 1:
-    
-
-print('\nWINNER: ' + str(tally[winnerIndices[0]]))
+    print('\nWINNER: ' + str(tally[decideTie(tally, winnerIndices, getWinnerScore(tournamentsHTML, tournament))]))
+else:
+    print('\nWINNER: ' + str(tally[winnerIndices[0]]))
