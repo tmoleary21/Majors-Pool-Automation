@@ -114,7 +114,7 @@ tournamentsHTML = accessTournaments()
 
 #Choose Tournament
 tournaments = getTournaments(tournamentsHTML)
-for i in range(6):
+for i in range(15):
     print(str(i+1) + ' - ' + tournaments[i])
 tournament = tournaments[int(input())-1]
 
@@ -148,6 +148,21 @@ for t in tally:
 
 #print(winnerIndices)
 if len(winnerIndices) > 1:
-    print('\nWINNER: ' + str(tally[decideTie(tally, winnerIndices, getWinnerScore(tournamentsHTML, tournament))]))
+    winnerIndex = decideTie(tally, winnerIndices, getWinnerScore(tournamentsHTML, tournament))
+    print('\nWINNER: ' + str(tally[winnerIndex]))
 else:
+    winnerIndex = winnerIndices[0]
     print('\nWINNER: ' + str(tally[winnerIndices[0]]))
+
+temp = tally[winnerIndex]
+tally[winnerIndex] = tally[0]
+tally[0] = temp
+
+for i in range(len(tally)):
+    tally[i] = [t[2] if type(t) == list and len(t) == 3 else 'NO DATA' if type(t) == list else t for t in tally[i]]
+
+header = ['First Name', 'Last Name', 'Golfer 1', 'Earnings 1', 'Golfer 2', 'Earnings 2', 'Golfer 3', 'Earnings 3', 'Total Earnings', 'Tie-Breaker']
+
+df = pd.DataFrame(tally, index=range(1,len(tally)+1), columns=header)
+df.to_csv(tournament + '.csv', index=False, header=True)
+print(df)
