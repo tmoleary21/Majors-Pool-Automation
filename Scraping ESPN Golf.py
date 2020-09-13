@@ -8,21 +8,27 @@ def readResponses():
     responses = pd.read_csv("Majors Pool.csv", usecols=range(1,7), names=names)
     return responses.to_numpy().tolist()
 
+# def accessRankings(): #Just for accessing the rankings site, so it can be accessed only once.
+#     url = 'https://www.espn.com/golf/rankings'
+#     html = urllib.request.urlopen(url).read()
+#     rhtml = ''.join([chr(n) for n in html])
+#     return rhtml
 
-def accessRankings(): #Just for accessing the rankings site, so it can be accessed only once.
-    url = 'https://www.espn.com/golf/rankings'
+
+# def getPlayerLink(rhtml, playerLastName): #Grabs the link for the player's profile site from the rankings site
+#     start = rhtml.index(playerLastName.lower())
+#     linkEnd = start + rhtml[start:].index('"')
+#
+#     while rhtml[start] != '"':
+#         start -= 1
+#     return rhtml[start+1:linkEnd]
+
+
+def accessLeaderboard(yearXTRAURL = ''):
+    url = 'https://www.espn.com/golf/leaderboard' + yearXTRAURL
     html = urllib.request.urlopen(url).read()
     rhtml = ''.join([chr(n) for n in html])
     return rhtml
-
-
-def getPlayerLink(rhtml, playerLastName): #Grabs the link for the player's profile site from the rankings site
-    start = rhtml.index(playerLastName.lower())
-    linkEnd = start + rhtml[start:].index('"')
-
-    while rhtml[start] != '"':
-        start -= 1
-    return rhtml[start+1:linkEnd]
 
 
 def getScores(url, tournament): #Gets the player earnings from the player's profile site
@@ -67,14 +73,7 @@ def getScores(url, tournament): #Gets the player earnings from the player's prof
     return info[index]
 
 
-def accessTournaments(): #Accesses the tournaments page so it is only accessed once
-    url = 'https://www.espn.com/golf/leaderboard/_/tournamentId/401155428'
-    html = urllib.request.urlopen(url).read()
-    rhtml = ''.join([chr(n) for n in html])
-    return rhtml
-
-
-def getTournaments(rhtml): #Gets a list of recent tournaments
+def getTournaments(rhtml): #Gets a list of recent tournaments. Pass in leaderboard rhtml. Only gives tournaments in the currrent year/ golf season. Ex. 2020-21. Whatever is default on the page
     start = rhtml.index('Tournaments')
     end = start + rhtml[start:].index('</div>')
     tournaments = rhtml[start:end].split('value="Selected">')
@@ -98,7 +97,6 @@ def getWinnerScore(tournamentHTML, tournament): #Grabs the selected tournament's
         return 0
     return int(rhtml[start:end])
 
-
 def decideTie(tally, winnerIndices, tournamentWinnerScore):
     winner = winnerIndices[0]
     for i in range(1,len(winnerIndices)):
@@ -109,12 +107,14 @@ def decideTie(tally, winnerIndices, tournamentWinnerScore):
 responses = readResponses()
 #print(str(responses) + '\n')
 
-rankingsHTML = accessRankings()
-tournamentsHTML = accessTournaments()
+
+leaderboardHTML = accessLeaderboard()
+# leaderboardHTML = accessLeaderboard('/_/tournamentId/401219793/season/2020') #To test 2019-20
+
 
 #Choose Tournament
-tournaments = getTournaments(tournamentsHTML)
-for i in range(15):
+tournaments = getTournaments(leaderboardHTML)
+for i in range(min(15, len(tournaments))):
     print(str(i+1) + ' - ' + tournaments[i])
 tournament = tournaments[int(input())-1]
 
@@ -146,23 +146,23 @@ for i in range(1,len(responses)):
 for t in tally:
     print(t)
 
-#print(winnerIndices)
-if len(winnerIndices) > 1:
-    winnerIndex = decideTie(tally, winnerIndices, getWinnerScore(tournamentsHTML, tournament))
-    print('\nWINNER: ' + str(tally[winnerIndex]))
-else:
-    winnerIndex = winnerIndices[0]
-    print('\nWINNER: ' + str(tally[winnerIndices[0]]))
-
-temp = tally[winnerIndex]
-tally[winnerIndex] = tally[0]
-tally[0] = temp
-
-for i in range(len(tally)):
-    tally[i] = [t[2] if type(t) == list and len(t) == 3 else 'NO DATA' if type(t) == list else t for t in tally[i]]
-
-header = ['First Name', 'Last Name', 'Golfer 1', 'Earnings 1', 'Golfer 2', 'Earnings 2', 'Golfer 3', 'Earnings 3', 'Total Earnings', 'Tie-Breaker']
-
-df = pd.DataFrame(tally, index=range(1,len(tally)+1), columns=header)
-df.to_csv(tournament + '.csv', index=False, header=True)
-print(df)
+# #print(winnerIndices)
+# if len(winnerIndices) > 1:
+#     winnerIndex = decideTie(tally, winnerIndices, getWinnerScore(tournamentsHTML, tournament))
+#     print('\nWINNER: ' + str(tally[winnerIndex]))
+# else:
+#     winnerIndex = winnerIndices[0]
+#     print('\nWINNER: ' + str(tally[winnerIndices[0]]))
+#
+# temp = tally[winnerIndex]
+# tally[winnerIndex] = tally[0]
+# tally[0] = temp
+#
+# for i in range(len(tally)):
+#     tally[i] = [t[2] if type(t) == list and len(t) == 3 else 'NO DATA' if type(t) == list else t for t in tally[i]]
+#
+# header = ['First Name', 'Last Name', 'Golfer 1', 'Earnings 1', 'Golfer 2', 'Earnings 2', 'Golfer 3', 'Earnings 3', 'Total Earnings', 'Tie-Breaker']
+#
+# df = pd.DataFrame(tally, index=range(1,len(tally)+1), columns=header)
+# df.to_csv(tournament + '.csv', index=False, header=True)
+# print(df)
