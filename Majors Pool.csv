@@ -1,6 +1,12 @@
-Timestamp,First Name,Last Name,Golfer 1,Golfer 2,Golfer 3,Final Score
-3/11/2020 11:50:00,mark,teruel,Brooks Koepka,Dustin Johnson,Jordan Spieth,-10
-3/11/2020 13:31:44,John,O'Leary,Jason Day,Dustin Johnson,Tony Finau,-14
-3/11/2020 19:00:39,Scott,Fabrizio ,John rahm,Justin Thomas ,Ricky Fowler ,272
-3/11/2020 20:49:01,CJ,Bang,Jon Rahm,Rory McIlroy,Adam Scott,270
-3/11/2020 22:04:27,Tyson,O'Leary,Jordan Spieth,Rory McIlroy,Justin Thomas,-2
+Timestamp,First Name,Last Name,Golfer 1,Golfer 2,Golfer 3,"Final Score (Please enter in the form +/-par, do not use total score)"
+9/14/2020 20:31:42,Mark,Teruel,Dustin Johnson,Jon Rahm,Xander Schauffele,-6
+9/14/2020 20:36:28,Scott,Fabrizio,Jon Rahm,Rory McIlroy,Xander Schauffele,-4
+9/15/2020 9:12:17,Ricj,Milchak,Jon Rahm,Webb simpson,Xander Schauffele,2
+9/15/2020 10:00:11,Ricj,Milchak,Jon Rahm,Webb simpson,Xander Schauffele,2
+9/15/2020 14:25:12,CJ,Bang,Tommie Fleetwood,Dustin Johnson,Adam Scott,-2
+9/16/2020 10:49:08,John,O'Leary,Webb Simpson,Justin Thomas,Patrick Reed,-4
+9/16/2020 10:51:31,Tyson,O'Leary,Rory McIlroy,Ryo Ishikawa,Ryan Fox,4
+9/16/2020 10:54:11,Joe,O'Leary,Dustin Johnson,Jordan Spieth,Tiger Woods,-13
+9/16/2020 10:57:44,Test,picks,Brooks Koepka,Collin Morikawa,Scott Fabrizio,0
+9/16/2020 20:44:02,Susan,O'Leary,Tiger Woods,Jack Mickelson,Dustin Johnson,-1
+9/16/2020 21:25:06,Jamie,Vanden Hoek,Daniel Berger,Collin Morikawa,Xander Schauffele,-9

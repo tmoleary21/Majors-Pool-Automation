@@ -5,154 +5,131 @@ import re
 
 def readResponses():
     names = ['Timestamp', 'First Name', 'Last Name', 'Golfer 1', 'Golfer 2', 'Golfer 3', 'Final Score']
-    responses = pd.read_csv("Majors Pool.csv", usecols=range(1,7), names=names)
+    responses = pd.read_csv("Majors Pool.csv", usecols=range(1, 7), names=names)
     return responses.to_numpy().tolist()
 
-# def accessRankings(): #Just for accessing the rankings site, so it can be accessed only once.
-#     url = 'https://www.espn.com/golf/rankings'
-#     html = urllib.request.urlopen(url).read()
-#     rhtml = ''.join([chr(n) for n in html])
-#     return rhtml
 
-
-# def getPlayerLink(rhtml, playerLastName): #Grabs the link for the player's profile site from the rankings site
-#     start = rhtml.index(playerLastName.lower())
-#     linkEnd = start + rhtml[start:].index('"')
-#
-#     while rhtml[start] != '"':
-#         start -= 1
-#     return rhtml[start+1:linkEnd]
-
-
-def accessLeaderboard(yearXTRAURL = ''):
+def accessLeaderboard(yearXTRAURL=''):
     url = 'https://www.espn.com/golf/leaderboard' + yearXTRAURL
     html = urllib.request.urlopen(url).read()
     rhtml = ''.join([chr(n) for n in html])
     return rhtml
 
+def accessSpecificLeaderboard(mainLeaderboardHtml, tournament):
+    i = mainLeaderboardHtml.index('value="Selected">' + tournament + '</option>')
+    start = i
+    while(mainLeaderboardHtml[start-1:start+1] != '"/'):
+        start -= 1
+    end = mainLeaderboardHtml[start:i].index('"')
 
-def getScores(url, tournament): #Gets the player earnings from the player's profile site
+    url = 'https://www.espn.com' + mainLeaderboardHtml[start:start+end]
     html = urllib.request.urlopen(url).read()
     rhtml = ''.join([chr(n) for n in html])
-    start = rhtml.index('Recent 2020 PGA Tour Tournaments')
-    start = rhtml.index('<td align="left">\n', start) + 18 #MIGHT NEED TO BE CHANGED. SEEMS FLIMSY
-    end = start + rhtml[start:].index('</table>')
-
-    tournaments = rhtml[start:end].split('<td align="left">')
-    tournaments = [re.split(r'[ ]*[|]+[ ]*', re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '|', t))) for t in tournaments]
-
-    info = []
-    for i in range(1,len(tournaments),2):
-        temp = ['', 0, 0]
-        for j in range(len(tournaments[i])):
-            if j == 1:
-                temp[0] = tournaments[i][j]
-            if '(' in tournaments[i][j]:
-                temp[1] = 0 if 'E' in tournaments[i][j] else int(tournaments[i][j][1:-1])
-            if 'Withdrawn' in tournaments[i][j]:
-                temp[1] = 'Withdrawn'
-            if 'Missed Cut' in tournaments[i][j]:
-                temp[1] = 'Missed Cut'
-            if 'Disqualified' in tournaments[i][j]:
-                temp[1] = 'Disqualified'
-            if '$' in tournaments[i][j]:
-                temp[2] = int(tournaments[i][j][1:].replace(',', ''))
-        info.append(temp)
-
-    # for i in info: #Just for debugging
-    #     print(i)
-    def findIndex():
-        for i in range(len(info)):
-            if tournament in info[i]:
-                return i
-        return None
-
-    index = findIndex()
-    if index == None:
-        return []
-    return info[index]
+    rhtml = rhtml[rhtml.index('<table'):]
+    rhtml = rhtml[:rhtml.index('</table>')]
+    return rhtml
 
 
-def getTournaments(rhtml): #Gets a list of recent tournaments. Pass in leaderboard rhtml. Only gives tournaments in the currrent year/ golf season. Ex. 2020-21. Whatever is default on the page
+def getEarnings(player, tableHtml):  # Gets the player earnings from the tournament's html table
+    try:
+        start = tableHtml.index(player)
+    except(ValueError):
+        return "NIT"
+    end = tableHtml[start:].index('</tr>')
+    try:
+        start2 = start + tableHtml[start:start+end].index('$')
+        print(tableHtml[start])
+    except(ValueError):
+        return 0
+    end = tableHtml[start2:start+end].index('</td>')
+    return int(tableHtml[start2+1:start2+end].replace(',',''))
+
+
+def getTournaments(rhtml):  # Gets a list of recent tournaments. Pass in leaderboard rhtml. Only gives tournaments in the currrent year/ golf season. Ex. 2020-21. Whatever is default on the page
     start = rhtml.index('Tournaments')
     end = start + rhtml[start:].index('</div>')
     tournaments = rhtml[start:end].split('value="Selected">')
-    tournaments = [tournaments[i][:tournaments[i].index('<')] for i in range(1,len(tournaments))]
+    tournaments = [tournaments[i][:tournaments[i].index('<')] for i in range(1, len(tournaments))]
     return tournaments
 
 
-def getWinnerScore(tournamentHTML, tournament): #Grabs the selected tournament's winner's score to be compared with guesses
+def getWinnerScore(tournamentHTML, tournament):  # Grabs the selected tournament's winner's score to be compared with guesses
     linkEnd = tournamentHTML.index(tournament) - 19
-    linkStart = linkEnd-1
+    linkStart = linkEnd - 1
     while tournamentHTML[linkStart] != '"':
         linkStart -= 1
 
-    url = 'https://www.espn.com' + tournamentHTML[linkStart+1:linkEnd]
+    url = 'https://www.espn.com' + tournamentHTML[linkStart + 1:linkEnd]
     html = urllib.request.urlopen(url).read()
     rhtml = ''.join([chr(n) for n in html])
     start = rhtml.index('AnchorLink leaderboard_player_name')
     start = start + rhtml[start:].index('<td class="Table__TD">') + 22
-    end = start + rhtml[start:start+10].index('<')
+    end = start + rhtml[start:start + 10].index('<')
     if rhtml[start:end] == 'E':
         return 0
     return int(rhtml[start:end])
 
+
 def decideTie(tally, winnerIndices, tournamentWinnerScore):
     winner = winnerIndices[0]
-    for i in range(1,len(winnerIndices)):
-        if abs(int(tally[winnerIndices[i]][9]) - tournamentWinnerScore) < abs(int(tally[winner][9]) - tournamentWinnerScore):
+    for i in range(1, len(winnerIndices)):
+        if abs(int(tally[winnerIndices[i]][9]) - tournamentWinnerScore) < abs(
+                int(tally[winner][9]) - tournamentWinnerScore):
             winner = winnerIndices[i]
     return winner
 
+
 responses = readResponses()
-#print(str(responses) + '\n')
+# print(str(responses) + '\n')
 
 
 leaderboardHTML = accessLeaderboard()
 # leaderboardHTML = accessLeaderboard('/_/tournamentId/401219793/season/2020') #To test 2019-20
 
 
-#Choose Tournament
+# Choose Tournament
 tournaments = getTournaments(leaderboardHTML)
 for i in range(min(15, len(tournaments))):
-    print(str(i+1) + ' - ' + tournaments[i])
-tournament = tournaments[int(input())-1]
+    print(str(i + 1) + ' - ' + tournaments[i])
+tournament = tournaments[int(input()) - 1]
+print(tournament)
+tournamentHtml = accessSpecificLeaderboard(leaderboardHTML, tournament)
 
 winnerIndices = [0]
 tally = []
-for i in range(1,len(responses)):
+for i in range(1, len(responses)):
     sum = 0
     temp = []
-    temp.append(responses[i][0])
-    temp.append(responses[i][1])
-    temp.append(responses[i][2])
-    temp.append(getScores(getPlayerLink(rankingsHTML, responses[i][2].split()[1]), tournament))
-    sum += temp[3][2] if len(temp[3]) > 2 else 0
-    temp.append(responses[i][3])
-    temp.append(getScores(getPlayerLink(rankingsHTML, responses[i][3].split()[1]), tournament))
-    sum += temp[5][2] if len(temp[5]) > 2 else 0
-    temp.append(responses[i][4])
-    temp.append(getScores(getPlayerLink(rankingsHTML, responses[i][4].split()[1]), tournament))
-    sum += temp[7][2] if len(temp[7]) > 2 else 0
-    temp.append(sum)
-    temp.append(responses[i][5])
+    temp.append(responses[i][0])  # ......................................................................First Name
+    temp.append(responses[i][1])  # ......................................................................Last Name
+    temp.append(responses[i][2])  # ......................................................................Golfer 1 Name
+    temp.append(getEarnings(responses[i][2], tournamentHtml))  # .........................................Golfer 1 Score
+    sum += temp[3] if temp[3] != "NIT" else 0
+    temp.append(responses[i][3])  # ......................................................................Golfer 2 Name
+    temp.append(getEarnings(responses[i][3], tournamentHtml))  # .........................................Golfer 2 Score
+    sum += temp[5] if temp[5] != "NIT" else 0
+    temp.append(responses[i][4])  # ......................................................................Golfer 3 Name
+    temp.append(getEarnings(responses[i][4], tournamentHtml))  # .........................................Golfer 3 Score
+    sum += temp[7] if temp[7] != "NIT" else 0
+    temp.append(sum)  # ..................................................................................Sum of earnings
+    temp.append(int(responses[i][5]))  # ......................................................................Score guess
     tally.append(temp)
     if i > 1:
         if sum == tally[winnerIndices[0]][8]:
-            winnerIndices.append(i-1)
+            winnerIndices.append(i - 1)
         if sum > tally[winnerIndices[0]][8]:
-            winnerIndices = [i-1]
+            winnerIndices = [i - 1]
 
-for t in tally:
-    print(t)
+# for t in tally:
+#     print(t)
 
-# #print(winnerIndices)
-# if len(winnerIndices) > 1:
-#     winnerIndex = decideTie(tally, winnerIndices, getWinnerScore(tournamentsHTML, tournament))
-#     print('\nWINNER: ' + str(tally[winnerIndex]))
-# else:
-#     winnerIndex = winnerIndices[0]
-#     print('\nWINNER: ' + str(tally[winnerIndices[0]]))
+#print(winnerIndices)
+if len(winnerIndices) > 1:
+    winnerIndex = decideTie(tally, winnerIndices, getWinnerScore(tournamentsHTML, tournament))
+    print('\nWINNER: ' + str(tally[winnerIndex]))
+else:
+    winnerIndex = winnerIndices[0]
+    print('\nWINNER: ' + str(tally[winnerIndices[0]]))
 #
 # temp = tally[winnerIndex]
 # tally[winnerIndex] = tally[0]
