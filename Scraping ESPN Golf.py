@@ -38,7 +38,6 @@ def getEarnings(player, tableHtml):  # Gets the player earnings from the tournam
     end = tableHtml[start:].index('</tr>')
     try:
         start2 = start + tableHtml[start:start+end].index('$')
-        print(tableHtml[start])
     except(ValueError):
         return 0
     end = tableHtml[start2:start+end].index('</td>')
@@ -92,7 +91,7 @@ tournaments = getTournaments(leaderboardHTML)
 for i in range(min(15, len(tournaments))):
     print(str(i + 1) + ' - ' + tournaments[i])
 tournament = tournaments[int(input()) - 1]
-print(tournament)
+# print(tournament)
 tournamentHtml = accessSpecificLeaderboard(leaderboardHTML, tournament)
 
 winnerIndices = [0]
@@ -130,16 +129,16 @@ if len(winnerIndices) > 1:
 else:
     winnerIndex = winnerIndices[0]
     print('\nWINNER: ' + str(tally[winnerIndices[0]]))
-#
-# temp = tally[winnerIndex]
-# tally[winnerIndex] = tally[0]
-# tally[0] = temp
-#
-# for i in range(len(tally)):
-#     tally[i] = [t[2] if type(t) == list and len(t) == 3 else 'NO DATA' if type(t) == list else t for t in tally[i]]
-#
-# header = ['First Name', 'Last Name', 'Golfer 1', 'Earnings 1', 'Golfer 2', 'Earnings 2', 'Golfer 3', 'Earnings 3', 'Total Earnings', 'Tie-Breaker']
-#
-# df = pd.DataFrame(tally, index=range(1,len(tally)+1), columns=header)
-# df.to_csv(tournament + '.csv', index=False, header=True)
-# print(df)
+
+tally = sorted(tally, key=lambda a : a[8], reverse=True)
+
+for i in range(len(tally)):
+    tally[i] = [t[2] if type(t) == list and len(t) == 3 else 'NO DATA' if type(t) == list else t for t in tally[i]]
+
+header = ['First Name', 'Last Name', 'Golfer 1', 'Earnings 1', 'Golfer 2', 'Earnings 2', 'Golfer 3', 'Earnings 3', 'Total Earnings', 'Tie-Breaker']
+
+df = pd.DataFrame(tally, index=range(1,len(tally)+1), columns=header)
+df.to_csv(tournament + '.csv', index=False, header=True)
+print(df)
+
+input("Open <tournament>.csv to see results. Press the ENTER key to exit")
