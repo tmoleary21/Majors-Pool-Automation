@@ -52,15 +52,7 @@ def getTournaments(rhtml):  # Gets a list of recent tournaments. Pass in leaderb
     return tournaments
 
 
-def getWinnerScore(tournamentHTML, tournament):  # Grabs the selected tournament's winner's score to be compared with guesses
-    linkEnd = tournamentHTML.index(tournament) - 19
-    linkStart = linkEnd - 1
-    while tournamentHTML[linkStart] != '"':
-        linkStart -= 1
-
-    url = 'https://www.espn.com' + tournamentHTML[linkStart + 1:linkEnd]
-    html = urllib.request.urlopen(url).read()
-    rhtml = ''.join([chr(n) for n in html])
+def getWinnerScore(rhtml):  # Grabs the selected tournament's winner's score to be compared with guesses
     start = rhtml.index('AnchorLink leaderboard_player_name')
     start = start + rhtml[start:].index('<td class="Table__TD">') + 22
     end = start + rhtml[start:start + 10].index('<')
@@ -123,12 +115,8 @@ for i in range(1, len(responses)):
 #     print(t)
 
 #print(winnerIndices)
-if len(winnerIndices) > 1:
-    winnerIndex = decideTie(tally, winnerIndices, getWinnerScore(tournamentsHTML, tournament))
-    print('\nWINNER: ' + str(tally[winnerIndex]))
-else:
-    winnerIndex = winnerIndices[0]
-    print('\nWINNER: ' + str(tally[winnerIndices[0]]))
+winnerIndex = decideTie(tally, winnerIndices, getWinnerScore(tournamentHtml))
+print('\nWINNER: ' + str(tally[winnerIndex]))
 
 tally = sorted(tally, key=lambda a : a[8], reverse=True)
 
