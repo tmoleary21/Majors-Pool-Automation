@@ -69,7 +69,7 @@ def decideTie(tally, winnerIndices, tournamentWinnerScore):
             winner = winnerIndices[i]
     return winner
 
-def run():
+def run(tournament=''):
     responses = readResponses()
     # print(str(responses) + '\n')
 
@@ -82,7 +82,8 @@ def run():
     tournaments = getTournaments(leaderboardHTML)
     for i in range(min(15, len(tournaments))):
         print(str(i + 1) + ' - ' + tournaments[i])
-    tournament = tournaments[int(input()) - 1]
+    if(tournament==''):
+        tournament = tournaments[int(input()) - 1]
     # print(tournament)
     tournamentHtml = accessSpecificLeaderboard(leaderboardHTML, tournament)
 
