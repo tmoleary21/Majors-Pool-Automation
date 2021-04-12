@@ -34,7 +34,7 @@ def getEarnings(player, tableHtml):  # Gets the player earnings from the tournam
     try:
         start = tableHtml.index(player)
     except(ValueError):
-        return "NIT"
+        return "NIT" #Not In Tournament
     end = tableHtml[start:].index('</tr>')
     try:
         start2 = start + tableHtml[start:start+end].index('$')
@@ -131,10 +131,11 @@ def run(tournament=''):
     print(df)
 
 
-run()
-action = input("Open <tournament>.csv to see results. Enter the 'q' key to quit")
-while(action != 'q'):
-    if(action != 'q'):
-        print('invalid')
-    action = input()
-quit()
+if __name__ == '__main__':
+    run()
+    action = input("Open <tournament>.csv to see results. Enter the 'q' key to quit")
+    while(action != 'q'):
+        if(action != 'q'):
+          print('invalid')
+        action = input()
+    quit()
