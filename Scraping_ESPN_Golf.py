@@ -133,9 +133,9 @@ def run(tournament=''):
 
 if __name__ == '__main__':
     run()
-    action = input("Open <tournament>.csv to see results. Enter the 'q' key to quit")
-    while(action != 'q'):
-        if(action != 'q'):
-          print('invalid')
-        action = input()
-    quit()
+    # action = input("Open <tournament>.csv to see results. Enter the 'q' key to quit")
+    # while action != 'q':
+    #     if action != 'q':
+    #       print('invalid')
+    #     action = input()
+    # quit()
