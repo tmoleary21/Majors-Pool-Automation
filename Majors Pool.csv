@@ -1,52 +1,54 @@
 Timestamp,First Name,Last Name,Golfer 1,Golfer 2,Golfer 3,"Final Score (Please enter in the form +/-par, do not use total score)"
-4/5/2021 18:18,Jeff ,Moore,Lee Westwood,Patrick Reed,Jordan Spieth,-18
-4/5/2021 18:29,Todd,Rosenzweig,Brooks Koepka,Jordan Spieth,Jon Rahm,-8
-4/5/2021 18:45,Jim ,Hamilton,Jordan Spieth,Dustin Johnson,Jon Rahm,-11
-4/5/2021 18:59,Paul,Saunders,Patrick Cantlay,Brooks Koepka,Rory McIlroy,-12
-4/5/2021 20:31,Rick,Milchak,Billy Horschel,Jordan Spieth,Matt Kuchar,-12
-4/6/2021 6:07,Tony,Cristello,Bryson DeChambeau,Collin Morikawa,Sungjae Im,-9
-4/6/2021 7:01,Eric,Ganguly,Patrick Cantlay,Jon Rahm,Justin Thomas,-12
-4/6/2021 7:07,Troy,Allen,Justin Thomas,Patrick Cantlay,Collin Morikawa,-6
-4/6/2021 7:52,Dee,Monahan,Dustin Johnson,Bryson DeChambeau,Patrick Cantlay,-8
-4/6/2021 7:54,Jim ,Monahan,Sergio Garcia,Matt Fitzpatrick,Dustin Johnson,-11
-4/6/2021 8:59,CJ,Bang,Jordan Spieth,Cameron Smith,Dustin Johnson,-17
-4/6/2021 9:22,Steve,Schuster,Justin Thomas,Brooks Koepka,Jon Rahm,-15
-4/6/2021 9:34,Zach,Landis,Xander Schauffele,Patrick Reed,Dustin Johnson,-14
-4/6/2021 9:34,Troy,Becker,Bryson DeChambeau,Jon Rahm,Justin Thomas,-12
-4/6/2021 9:45,Tracy,Foster,Brooks Koepka,Sergio Garcia,Jon Rahm,-9
-4/6/2021 11:38,Ross,McFarland,Dustin Johnson,Jon Rahm,Viktor Hovland,-13
-4/6/2021 13:11,Matt,Crane,Sergio Garcia,Jon Rahm,Justin Thomas,-15
-4/6/2021 13:57,Thad,Wood,Dustin Johnson,Justin Thomas,Jon Rahm,-17
-4/6/2021 14:03,Jeff ,DeHaven,Jordan Spieth,Justin Thomas,Tony Finau,-11
-4/6/2021 14:05,Evan,Goldsmith,Patrick Cantlay,Justin Thomas,Jon Rahm,-11
-4/6/2021 17:15,Brent,Truchon,Jordan Spieth,Jon Rahm,Rory McIlroy,-17
-4/6/2021 19:08,Robert,Medl,Dustin Johnson,Jordan Spieth,Justin Thomas,-11
-4/6/2021 20:45,Chad,Koerlin,Patrick Reed,Cameron Smith,Xander Schauffele,-12
-4/7/2021 6:50,Gareth,Ricketts,Justin Thomas,Jordan Spieth,Collin Morikawa,-15
-4/7/2021 10:01,Matthew,Friel,Justin Thomas,Xander Schauffele,Lee Westwood,-11
-4/7/2021 10:22,Tina,Karcher,Rory McIlroy,Jordan Spieth,Dustin Johnson,-14
-4/7/2021 11:56,Jim,Ventre,Collin Morikawa,Jordan Spieth,Justin Thomas,-9
-4/7/2021 12:00,John,O'Leary,Rory McIlroy,Jon Rahm,Webb Simpson,-15
-4/7/2021 12:26,Mike,Stanford,Phil Mickelson,Sergio Garcia,Jordan Spieth,-12
-4/7/2021 12:37,Mark,Teruel,Jon Rahm,Jordan Spieth,Cameron Smith,13
-4/7/2021 13:24,Woody,Moss,Patrick Cantlay,Collin Morikawa,Justin Thomas,-12
-4/7/2021 14:17,Michael,Sampsill,Dustin Johnson,Rory McIlroy,Justin Thomas,-14
-4/7/2021 16:51,Gary,Reef,Bryson DeChambeau,Tony Finau,Justin Thomas,-15
-4/7/2021 17:24,Don,McFarland,Dustin Johnson,Jordan Spieth,Jon Rahm,-11
-4/7/2021 17:45,Ryan,Wright ,Paul Casey,Lee Westwood,Justin Thomas,-13
-4/7/2021 19:20,Leyton,Wellbaum,Patrick Reed,Tommy Fleetwood,Xander Schauffele,-12
-4/7/2021 19:25,Steve,Gordon,Jordan Spieth,Collin Morikawa,Patrick Reed,-8
-4/7/2021 19:28,David,Dahl,Jordan Spieth,Patrick Reed,Billy Horschel,-15
-4/7/2021 20:02,Tyson,O'Leary,Rory McIlroy,Xander Schauffele,Sungjae Im,-4
-4/7/2021 20:14,Bryan,Watkins,Justin Thomas,Matt Fitzpatrick,Rory McIlroy,-12
-4/7/2021 20:19,Kelby,Bethards,Dustin Johnson,Collin Morikawa,Xander Schauffele,19
-4/7/2021 20:23,Scott,Fabrizio,Xander Schauffele,Dustin Johnson,Justin Thomas,-16
-4/7/2021 20:34,Paul,Doye,Patrick Reed,Webb Simpson,Cameron Smith,-7
-4/7/2021 20:40,Derek,Samuelson,Paul Casey,Jon Rahm,Lee Westwood,-12
-4/7/2021 21:21,Patrick,Crouch,Dustin Johnson,Justin Thomas,Jon Rahm,-13
-4/7/2021 22:18,Chris,Fleener,Dustin Johnson,Justin Thomas,Cameron Smith,-15
-4/7/2021 22:20,Brian,Gibson,Dustin Johnson,Xander Schauffele,Tony Finau,-10
-4/8/2021 0:04,Chris,Fox,Patrick Cantlay,Justin Thomas,Patrick Reed,-13
-4/8/2021 3:12,Ryan,Hill,Adam Scott,Jordan Spieth,Sergio Garcia,-12
-4/8/2021 8:05,Jamie,Vanden Hoek,Jon Rahm,Justin Thomas,Cameron Smith,-16
-,Jim,Smucker,Phil Mickelson,Justin Thomas,Jordan Spieth,0
+5/17/2021 8:15:07,Zach,Landis,Jon Rahm,Rory McIlroy,Jordan Spieth,-14
+5/17/2021 8:36:35,Jim,Smucker,Jon Rahm,Xander Schauffele,Rory McIlroy,-10
+5/17/2021 9:50:58,Tony,Cristello,Rory McIlroy,Xander Schauffele,Jordan Spieth,-10
+5/17/2021 10:49:16,Troy,Allen,Jordan Spieth,Rory McIlroy,Webb Simpson,-14
+5/17/2021 11:16:12,Eric,Ganguly,Collin Morikawa,Jordan Spieth,Rory McIlroy,-4
+5/17/2021 12:44:43,Steve,Schuster,Jordan Spieth,Collin Morikawa,Rory McIlroy,-13
+5/17/2021 15:21:40,Zach,Landis,Jon Rahm,Rory McIlroy,Jordan Spieth,-14
+5/18/2021 6:23:16,Jim,Hamilton,Bryson DeChambeau,Rory McIlroy,Sam Burns,-11
+5/18/2021 11:52:07,Thad,Wood,Jordan Spieth,Rory McIlroy,Viktor Hovland,-9
+5/18/2021 17:29:37,Ryan ,Wright ,Marc Leishman,Rory McIlroy,Patrick Reed,-9
+5/18/2021 18:35:10,Ross,McFarland,Xander Schauffele,Jordan Spieth,Rory McIlroy,-7
+5/18/2021 19:19:29,Steve,Gordon,Daniel Berger,Cameron Smith,Rory McIlroy,-17
+5/18/2021 19:23:38,Woody,Moss,Sam Burns,Charl Schwartzel,Jordan Spieth,-12
+5/18/2021 22:12:49,CJ,Bang,Tony Finau,Marc Leishman,Jon Rahm,-11
+5/19/2021 0:18:35,Jim,Ventre,Cameron Smith,Rory McIlroy,Scottie Scheffler,-9
+5/19/2021 1:41:33,Tina,Karcher ,Daniel Berger,Viktor Hovland,Xander Schauffele,-14
+5/19/2021 3:28:12,Matt,Crane,Rory McIlroy,Xander Schauffele,Tony Finau,-12
+5/19/2021 5:01:49,Robert,Medl,Rory McIlroy,Patrick Reed,Xander Schauffele,-7
+5/19/2021 6:26:33,Dee ,Monahan,Jordan Spieth,Jon Rahm,Patrick Reed,-12
+5/19/2021 6:27:35,Jim,Monahan,Jordan Spieth,Rory McIlroy,Xander Schauffele,-9
+5/19/2021 6:31:40,Jeff,DeHaven,Viktor Hovland,Collin Morikawa,Rory McIlroy,-11
+5/19/2021 7:40:16,Jeff,Moore,Webb Simpson,Max Homa,Rory McIlroy,-6
+5/19/2021 8:06:48,William ,Ricketts,Dustin Johnson,Sam Burns,Xander Schauffele,-10
+5/19/2021 9:31:08,Paul,Saunders,Dustin Johnson,Jon Rahm,Justin Thomas,-9
+5/19/2021 9:37:57,Troy,Becker,Hideki Matsuyama,Jordan Spieth,Xander Schauffele,-10
+5/19/2021 10:35:24,derek,samuelson,Gary Woodland,Sam Burns,Sergio Garcia,-12
+5/19/2021 12:01:28,Chris,Fleener,Jordan Spieth,Viktor Hovland,Rory McIlroy,-13
+5/19/2021 13:39:36,Evan,Goldsmith,Jordan Spieth,Daniel Berger,Xander Schauffele,-9
+5/19/2021 13:54:19,Chad,Koerlin,Daniel Berger,Will Zalatoris,Jordan Spieth,-9
+5/19/2021 14:13:28,Mark,Teruel,Rory McIlroy,Justin Thomas,Viktor Hovland,-10
+5/19/2021 14:13:58,Brian ,Gibson ,Jordan Spieth,Justin Thomas,Viktor Hovland,-10
+5/19/2021 14:40:36,Gary,Reef,Dustin Johnson,Jon Rahm,Rory McIlroy,-13
+5/19/2021 17:28:26,Rick,Milchak,Rory McIlroy,Viktor Hovland,Tyrrell Hatton,-6
+5/19/2021 18:49:53,Kelby,Bethards,Jordan Spieth,Rory McIlroy,Jon Rahm,-22
+5/19/2021 19:02:23,Don,McFarland,Rory McIlroy,Justin Thomas,Xander Schauffele,-14
+5/19/2021 19:07:57,Brent ,Truchon,Viktor Hovland,Collin Morikawa,Dustin Johnson,-8
+5/19/2021 19:19:14,John,O'Leary,Xander Schauffele,Jordan Spieth,Justin Thomas,-9
+5/19/2021 19:54:40,Jamie,Vanden Hoek,Jordan Spieth,Viktor Hovland,Collin Morikawa,-12
+5/19/2021 20:08:05,Patrick,Crouch,Jordan Spieth,Rory McIlroy,Xander Schauffele,-12
+5/19/2021 20:08:16,Tyson,O'Leary,Tony Finau,Jon Rahm,Daniel Berger,-5
+5/19/2021 20:26:27,Scott,Fabrizio,Jon Rahm,Jordan Spieth,Viktor Hovland,15
+5/19/2021 21:32:54,Bryan,Watkins,Daniel Berger,Patrick Reed,Jordan Spieth,-8
+5/19/2021 22:00:16,David,Dahl,Rory McIlroy,Webb Simpson,Scottie Scheffler,-12
+5/19/2021 22:02:31,Ryan ,Hill ,Marc Leishman,Rory McIlroy,Xander Schauffele,-16
+5/19/2021 22:02:33,Paul,Doye,Rory McIlroy,Jordan Spieth,Xander Schauffele,-7
+5/19/2021 22:29:13,Chris,Fox,Daniel Berger,Cameron Smith,Jordan Spieth,-11
+5/20/2021 3:27:17,Matt,Friel,Collin Morikawa,Jordan Spieth,Jon Rahm,-7
+5/20/2021 5:53:34,Leyton ,Wellbaum,Daniel Berger,Bryson DeChambeau,Rory McIlroy,-12
+5/20/2021 5:54:06,David,Dahl,Rory McIlroy,Webb Simpson,Scottie Scheffler,-12
+5/20/2021 6:31:28,Tracy,Foster,Jordan Spieth,Dustin Johnson,Justin Thomas,-9
+5/20/2021 23:11:39,Ross,McFarland,Xander Schauffele,Jordan Spieth,Rory McIlroy,-7
+5/21/2021 8:16:34,Gary,Reef,Dustin Johnson,Jon Rahm,Rory McIlroy,-13
+5/21/2021 11:11:31,Michael,Sampsill,Jordan Spieth,Jon Rahm,Bryson DeChambeau,-12

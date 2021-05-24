@@ -21,11 +21,17 @@ for csv in csvs:
         # print(str(person))
         if person[0:2] not in addedPeople:  # ensuring no duplicate responses in one tournament
             if (person[0]+' '+person[1]) not in totals:
-                totals[person[0]+' '+person[1]] = person[8]
+                totals[person[0].strip()+' '+person[1].strip()] = person[8]
             else:
-                totals[person[0]+' '+person[1]] += person[8]
+                totals[person[0].strip()+' '+person[1].strip()] = str(int(totals[person[0].strip()+' '+person[1].strip()]) + int(person[8]))
             addedPeople.append(person[0:2])
 
+data = sorted([[x, totals[x]] for x in totals], key=lambda a:int(a[1]), reverse=True)
+print(data)
+print('\n'.join([' : '.join(x) for x in data]))  # Definitely too complex, but prints leaderboard
 
-print( '\n'.join([' : '.join(x) for x in sorted([[x, totals[x]] for x in totals], key=lambda a:int(a[1]), reverse=True)]))  # Definitely too complex, but prints leaderboard
-# print(totals)
+header = ['Name', 'Total Earnings']
+df = pd.DataFrame(data=data,index=range(1,len(data)+1), columns=header)
+print(df)
+df.to_csv('runningStandings.csv', index=False, header=True)
+
